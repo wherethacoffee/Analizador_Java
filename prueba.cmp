@@ -1,0 +1,11 @@
+public class proyecto{
+   private String tarea(String var, int i){
+      if (40 > 30) {
+         do {
+            println("iteracion");
+         } while (i <= 10 ||  var == "stop");
+      } else {
+        println("error");
+      }
+   }
+}

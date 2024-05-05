@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/Token.java</file>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/Sintax.java</file>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/ExecuteJFlex.java</file>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/Lexer.java</file>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/FrmCompi.java</file>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/Lexer.flex</file>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/LexerCup.flex</file>
+            <file>file:/home/wherethacoffee/NetBeansProjects/CompiladorApp/src/compiladorapp/Sintax.cup</file>
+        </group>
+    </open-files>
+</project-private>

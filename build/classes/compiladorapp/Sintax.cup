@@ -1,0 +1,145 @@
+package compiladorapp;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    public String errors;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Public, Private, Class, Void, Int, Double, String, New, NextLine, NextInt,
+         NextDouble, Println, If, Else, Do, While, Switch, Case, Default, Identificador,
+         C_entera, C_real, C_String, Mas, Menos, Por, Division, Modulo, Igual, 
+         Menor_que, Menor_igual_que, Mayor_que, Mayor_igual_que, Exactamente_igual_que, 
+         Diferente_que, No_es, Y, O, P_coma, Corchete_a, Corchete_c, Dos_puntos, Parentesis_a, 
+         Parentesis_c, Llave_a, Llave_c, Coma, ERROR;
+
+non terminal CLASE, BLOQUE, FUNCION, CONDICIONALIF, CONDICIONALIFELSE, DECLARACIONVAR, DECLARACIONPARAMS,
+             WHILE, DOWHILE, SWITCHCASE, CONDICION, CONDICIONMULTIPLE, LLAMADAFUNCION, CASE, CONSTANTES,
+             TIPOVAR, CONDICIONAL, OP_ARITMETICOS, OP_RELACIONALES;
+
+start with CLASE;
+
+CONSTANTES ::=
+    C_entera | C_real | C_String
+;
+
+OP_ARITMETICOS ::=
+    Mas | Menos | Por | Division | Modulo | Igual
+;
+
+OP_RELACIONALES ::=
+    Menor_que | Menor_igual_que | Mayor_que | Mayor_igual_que | Exactamente_igual_que | Diferente_que
+;
+
+TIPOVAR ::=
+    Int |
+    Double |
+    String |
+    Identificador |
+    Int Corchete_a Corchete_c |
+    Double Corchete_a Corchete_c |
+    String Corchete_a Corchete_c 
+;
+
+LLAMADAFUNCION ::=
+    Identificador Parentesis_a CONSTANTES Parentesis_c P_coma | 
+    Println Parentesis_a CONSTANTES Parentesis_c P_coma | 
+    NextLine Parentesis_a CONSTANTES Parentesis_c P_coma | 
+    NextInt Parentesis_a CONSTANTES Parentesis_c P_coma | 
+    NextDouble Parentesis_a CONSTANTES Parentesis_c P_coma | 
+    Default Parentesis_a CONSTANTES Parentesis_c P_coma
+;
+
+DECLARACIONVAR ::=
+    Public TIPOVAR Identificador OP_ARITMETICOS CONSTANTES P_coma | 
+    Private TIPOVAR Identificador OP_ARITMETICOS CONSTANTES P_coma |
+    Public TIPOVAR Identificador OP_ARITMETICOS Corchete_a CONSTANTES Corchete_c P_coma | 
+    Private TIPOVAR Identificador OP_ARITMETICOS Corchete_a CONSTANTES Corchete_c P_coma |
+;
+
+DECLARACIONPARAMS ::=
+    Parentesis_a TIPOVAR Identificador Parentesis_c |
+    Parentesis_a TIPOVAR Identificador Coma TIPOVAR Identificador Parentesis_c
+;
+
+CONDICION ::=
+    Identificador | CONSTANTES |
+    No_es Identificador | No_es CONSTANTES |
+    Identificador OP_RELACIONALES Identificador |
+    Identificador OP_RELACIONALES CONSTANTES |
+    CONSTANTES OP_RELACIONALES Identificador |
+    CONSTANTES OP_RELACIONALES CONSTANTES |
+    No_es Identificador OP_RELACIONALES Identificador |
+    No_es Identificador OP_RELACIONALES CONSTANTES |
+    No_es CONSTANTES OP_RELACIONALES Identificador |
+    No_es CONSTANTES OP_RELACIONALES CONSTANTES |
+;
+
+CONDICIONMULTIPLE ::=
+    CONDICION Y CONDICION |
+    CONDICION O CONDICION
+;
+
+CONDICIONAL ::=
+    Parentesis_a CONDICION Parentesis_c Llave_a BLOQUE Llave_c |
+    Parentesis_a CONDICIONMULTIPLE Parentesis_c Llave_a BLOQUE Llave_c
+;
+
+CONDICIONALIF ::=
+    If CONDICIONAL
+;
+
+CONDICIONALIFELSE ::=
+    CONDICIONALIF Else Llave_a BLOQUE Llave_c
+;
+
+WHILE ::=
+    While CONDICIONAL
+;
+
+DOWHILE ::=
+    Do Llave_a BLOQUE Llave_c While Parentesis_a CONDICION Parentesis_c P_coma |
+    Do Llave_a BLOQUE Llave_c While Parentesis_a CONDICIONMULTIPLE Parentesis_c P_coma 
+;
+
+CASE ::= 
+    Case CONSTANTES Dos_puntos BLOQUE |
+    Case CONSTANTES Dos_puntos BLOQUE Case CONSTANTES Dos_puntos BLOQUE  |
+    Case CONSTANTES Dos_puntos BLOQUE Case CONSTANTES Dos_puntos BLOQUE Case CONSTANTES Dos_puntos BLOQUE 
+;
+
+SWITCHCASE ::=
+    Switch Parentesis_a Identificador Parentesis_c Llave_a CASE Llave_c
+;
+
+BLOQUE ::=
+    DECLARACIONVAR |
+    LLAMADAFUNCION |
+    CONDICIONALIF |
+    CONDICIONALIFELSE |
+    WHILE |
+    DOWHILE |
+    SWITCHCASE 
+;
+
+FUNCION ::=
+    Public TIPOVAR Identificador DECLARACIONPARAMS Llave_a BLOQUE Llave_c | 
+    Private TIPOVAR Identificador DECLARACIONPARAMS Llave_a BLOQUE Llave_c | 
+    Public Void Identificador DECLARACIONPARAMS Llave_a BLOQUE Llave_c |
+    Private Void Identificador DECLARACIONPARAMS Llave_a BLOQUE Llave_c
+;
+
+CLASE ::= 
+    Public Class Identificador Llave_a FUNCION Llave_c | 
+    Private Class Identificador Llave_a FUNCION Llave_c
+;

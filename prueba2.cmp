@@ -1,0 +1,8 @@
+switch (var) {
+    case 1:
+        println("Hola");
+    case 2:
+        println("mundo");
+    case 3:
+        println("!");
+}
